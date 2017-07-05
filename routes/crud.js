@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var bookshelf = require('../bookshelf');
+var knex = bookshelf.knex;
 
 /* GET home page. */
 router.get('/nuevo', function(req, res, next) {
@@ -10,8 +12,11 @@ router.get('/nuevo', function(req, res, next) {
 });
 
 router.post('/guardar', function(req, res, next) {
-  console.log(req.body);
-  res.json(req.body);
+  knex('asistentes').insert(req.body).then((data) => {
+    knex('asistentes').where('id', data.pop()).then(reg => {
+      res.json(reg[0]);
+    });
+  });
 });
 
 module.exports = router;
