@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= titulo %></title>
+</head>
+<body>
+  <h1><%= saludo %></h1>
+  <form method="post" action="/crud/guardar">
+    <div>
+      <label>Nombre</label>
+      <input type="text" name="nombre">
+    </div>
+    <div>
+      <label>Apellido</label>
+      <input type="text" name="apellido">
+    </div>
+    <div>
+      <label>Ocupación</label>
+      <input type="text" name="ocupacion">
+    </div>
+    <input type="submit" value="Guardar">
+  </form>
+</body>
+</html>
