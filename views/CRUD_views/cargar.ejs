@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Taller node</title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+</head>
+<body>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1>Subir archivo</h1>
+      <form method="post" action="/crud/cargar" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Archivo</label>
+          <input type="file" name="archivo" class="form-control">
+        </div>
+        <input type="submit" value="Cargar" class="btn btn-primary">
+      </form>
+    </div>
+  </div>
+</body>
+</html>
