@@ -7,6 +7,7 @@ var subidas = multer({ dest: 'subidas/' });
 var fs = require('fs');
 var path = require('path');
 var papaparse = require('papaparse');
+var async = require('async');
 
 /* GET home page. */
 router.get('/nuevo', function(req, res, next) {
@@ -45,7 +46,13 @@ router.post('/cargar', subidas.single('archivo'), function(req, res, next) {
               header: true,
               comments: true,
               complete: function(results) {
-                console.log(results.data);
+                async.eachSeries(results.data, function iteratee(item, callback) {
+                  knex('asistentes').insert({ nombre: item['Nombre'], ocupacion: item['Grado'] }).then(() => {
+                    callback(null);
+                  });
+                }, function done() {
+                    console.log('Ha finalizado la insersión');
+                });
               }
             });
           }
