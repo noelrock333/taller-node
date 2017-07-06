@@ -3,7 +3,8 @@ var router = express.Router();
 var bookshelf = require('../bookshelf');
 var knex = bookshelf.knex;
 var multer = require('multer');
-var subidas = multer({ dest: 'subidas/' })
+var subidas = multer({ dest: 'subidas/' });
+var fs = require('fs');
 
 /* GET home page. */
 router.get('/nuevo', function(req, res, next) {
@@ -27,9 +28,32 @@ router.get('/cargar', function(req, res, next) {
 
 router.post('/cargar', subidas.single('archivo'), function(req, res, next) {
   if(req.file) {
-    return res.send('Archivo enviado');
+    console.log(req.file);
+    var fileObj = req.file;
+    var source = fs.createReadStream(`./${fileObj.destination}${fileObj.filename}`);
+    var dest = fs.createWriteStream(`./archivos_publicos/${fileObj.originalname}`);
+
+    source.pipe(dest);
+    source.on('end', () => {
+      // Archivo copiado
+      res.send('Archivo enviado');
+    });
+    source.on('error', (err) => {
+      // Error al copiar
+      console.log(err);
+      res.send('Ha ocurrido un error');
+    });
+    source.on('close', () => {
+      // Se ejecuta al finalizar el stream haya ocurrido o no un error
+      fs.unlink(`./${fileObj.destination}${fileObj.filename}`, () => {
+        // Elimina el archivo original
+        console.log("File deleted");
+      });
+    });
   }
-  return res.send('Ha ocurrido un error');
+  else {
+    return res.send('Ha ocurrido un error');
+  }
 });
 
 module.exports = router;
