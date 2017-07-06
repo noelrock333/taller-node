@@ -15,6 +15,10 @@
         </div>
         <input type="submit" value="Cargar" class="btn btn-primary">
       </form>
+      <br />
+      <% if(typeof cargado == 'boolean' && cargado) { %>
+        <div style="padding: 20px 20px;" class="bg-success">Archivo Cargado Satisfactoriamente</div>
+      <% } %>
     </div>
   </div>
 </body>

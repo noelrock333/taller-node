@@ -5,6 +5,8 @@ var knex = bookshelf.knex;
 var multer = require('multer');
 var subidas = multer({ dest: 'subidas/' });
 var fs = require('fs');
+var path = require('path');
+var papaparse = require('papaparse');
 
 /* GET home page. */
 router.get('/nuevo', function(req, res, next) {
@@ -36,7 +38,20 @@ router.post('/cargar', subidas.single('archivo'), function(req, res, next) {
     source.pipe(dest);
     source.on('end', () => {
       // Archivo copiado
-      res.send('Archivo enviado');
+      if (path.extname(fileObj.originalname).toLowerCase() == '.csv') { // Verificamos que la extension sea CSV
+        fs.readFile(`./archivos_publicos/${fileObj.originalname}`, 'utf8', (err, data) => {
+          if (!err) {
+            papaparse.parse(data, {
+              header: true,
+              comments: true,
+              complete: function(results) {
+                console.log(results.data);
+              }
+            });
+          }
+        });
+      }
+      res.render('CRUD_views/cargar', { cargado: true });
     });
     source.on('error', (err) => {
       // Error al copiar
