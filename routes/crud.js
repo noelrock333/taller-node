@@ -20,29 +20,30 @@ router.get('/nuevo', function(req, res, next) {
 
 router.post('/guardar', function(req, res, next) {
   // Creamos una instancia del modelo Asistente, guardamos y obtenemos el registro insertado
-  new Asistente().save(req.body).then(data => {
-    res.json(data.toJSON());
+  new Asistente().save(req.body).then(model => {
+    res.json(model.toJSON());
   });
 });
 
 router.get('/lista', function(req, res, next) {
   // Creamos una instancia del modelo Asistente y obtenemos todos los registros
-  new Asistente().fetchAll().then(data => {
+  new Asistente().fetchAll().then(model => {
     res.render('CRUD_views/lista', {
-      asistentes: data.toJSON(),
+      asistentes: model.toJSON(),
       titulo: 'Listado de Asistentes'
     });
   });
-  /***
-  // Hace lo mismo que el código de arriba pero solo usando knex (sin usar el modelo)
-  knex('asistentes').then(data => {
-    res.render('CRUD_views/lista', {
-      asistentes: data,
-      titulo: 'Listado de Asistentes'
-    });
+});
+
+router.delete('/eliminar/:id', function(req, res, next) {
+  // Buscamos el registro con id igual al parametro recivido y lo eliminamos
+  new Asistente({ id: req.params.id }).destroy().then(model => { // para probar el catch podemos buscar undefined
+    let id = model.get('id'); // De esta manera obtenemos un valor de la respuesta sin tener que convertir todo el objeto en JSON
+    res.json({ deleted: true });
+  }).catch(() => {
+    res.json({ deleted: false });
   });
-  ***/
-})
+});
 
 router.get('/cargar', function(req, res, next) {
   res.render('CRUD_views/cargar');
