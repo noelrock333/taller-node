@@ -45,6 +45,24 @@ router.delete('/eliminar/:id', function(req, res, next) {
   });
 });
 
+router.get('/editar/:id', function(req, res, next) {
+  // Obtenemos un asistente por medio del id y lo enviamos a la vista
+  new Asistente({ id: req.params.id }).fetch().then(model => {
+    res.render('CRUD_views/editar', {
+      titulo: 'Editar',
+      asistente: model.toJSON()
+    });
+  });
+});
+
+router.post('/editar', function(req, res, next) {
+  // Automaticamente busca por el id que trae req.body y hace la actualizacion de los demás campos dependiendo del contenido del objeto
+  new Asistente(req.body).save().then(model => {
+    res.redirect('/crud/lista');
+  });
+});
+
+
 router.get('/cargar', function(req, res, next) {
   res.render('CRUD_views/cargar');
 });
