@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= titulo %></title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/bootstrap.css">
+</head>
+<body>
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <h1><%= titulo %></h1>
+      <table class="table table-stripped table-bordered">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Ocupacion</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% asistentes.forEach(item => { %>
+            <tr>
+              <td><%= item.id %></td>
+              <td><%= item.nombre %></td>
+              <td><%= item.apellido %></td>
+              <td><%= item.ocupacion %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

@@ -23,15 +23,26 @@ router.post('/guardar', function(req, res, next) {
   new Asistente().save(req.body).then(data => {
     res.json(data.toJSON());
   });
-  /*** 
-  // Insertamos un registro y lo obtenemos igual que en el código de arriba
-  knex('asistentes').insert(req.body).then((data) => {
-    knex('asistentes').where('id', data.pop()).then(reg => {
-      res.json(reg[0]);
+});
+
+router.get('/lista', function(req, res, next) {
+  // Creamos una instancia del modelo Asistente y obtenemos todos los registros
+  new Asistente().fetchAll().then(data => {
+    res.render('CRUD_views/lista', {
+      asistentes: data.toJSON(),
+      titulo: 'Listado de Asistentes'
+    });
+  });
+  /***
+  // Hace lo mismo que el código de arriba pero solo usando knex (sin usar el modelo)
+  knex('asistentes').then(data => {
+    res.render('CRUD_views/lista', {
+      asistentes: data,
+      titulo: 'Listado de Asistentes'
     });
   });
   ***/
-});
+})
 
 router.get('/cargar', function(req, res, next) {
   res.render('CRUD_views/cargar');
