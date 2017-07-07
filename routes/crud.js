@@ -8,6 +8,7 @@ var fs = require('fs');
 var path = require('path');
 var papaparse = require('papaparse');
 var async = require('async');
+const Asistente = require('../models/asistentes');
 
 /* GET home page. */
 router.get('/nuevo', function(req, res, next) {
@@ -18,11 +19,18 @@ router.get('/nuevo', function(req, res, next) {
 });
 
 router.post('/guardar', function(req, res, next) {
+  // Creamos una instancia del modelo Asistente, guardamos y obtenemos el registro insertado
+  new Asistente().save(req.body).then(data => {
+    res.json(data.toJSON());
+  });
+  /*** 
+  // Insertamos un registro y lo obtenemos igual que en el código de arriba
   knex('asistentes').insert(req.body).then((data) => {
     knex('asistentes').where('id', data.pop()).then(reg => {
       res.json(reg[0]);
     });
   });
+  ***/
 });
 
 router.get('/cargar', function(req, res, next) {
