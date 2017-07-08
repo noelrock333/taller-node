@@ -1,5 +1,12 @@
 var knexFile = require('./knexfile.js');
-var knex = require('knex')(knexFile.development);
+function knexEnv() {
+  if (process.env.NODE_ENV) {
+    return knexFile[process.env.NODE_ENV];
+  } else {
+    return knexFile.development;
+  }
+}
+var knex = require('knex')(knexEnv());
 
 var bookshelf = require('bookshelf')(knex);
 

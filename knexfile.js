@@ -9,7 +9,19 @@ module.exports = {
       database: 'taller_node_db',
       charset: 'utf8'
     },
-    debug: true
+    debug: false
+  },
+
+  test: {
+    client: 'mysql',
+    connection: {
+      host: '127.0.0.1',
+      user: 'root',
+      password: '',
+      database: 'taller_node_test_db',
+      charset: 'utf8'
+    },
+    debug: false
   },
 
   /***

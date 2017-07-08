@@ -58,7 +58,11 @@ router.get('/editar/:id', function(req, res, next) {
 router.post('/editar', function(req, res, next) {
   // Automaticamente busca por el id que trae req.body y hace la actualizacion de los demás campos dependiendo del contenido del objeto
   new Asistente(req.body).save().then(model => {
-    res.redirect('/crud/lista');
+    if (req.xhr) { // si la llamada es realizada usando ajax
+      res.json(model.toJSON());
+    } else {
+      res.redirect('/crud/lista');
+    }
   });
 });
 
