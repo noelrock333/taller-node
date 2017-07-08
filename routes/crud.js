@@ -27,7 +27,8 @@ router.post('/guardar', function(req, res, next) {
 
 router.get('/lista', function(req, res, next) {
   // Creamos una instancia del modelo Asistente y obtenemos todos los registros
-  new Asistente().fetchAll().then(model => {
+  new Asistente().fetchAll({ withRelated: ['habilidades']} ).then(model => {
+    console.log(model.toJSON()[200]);
     res.render('CRUD_views/lista', {
       asistentes: model.toJSON(),
       titulo: 'Listado de Asistentes'
