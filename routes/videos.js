@@ -11,7 +11,7 @@ router.post('/create', function(req, res, next) {
 });
 
 router.get('/show/:id', function(req, res, next) {
-  new Video().fetch({ id: req.params.id }).then(model => {
+  new Video({ id: req.params.id }).fetch().then(model => {
     res.json(model.toJSON());
   });
 });
