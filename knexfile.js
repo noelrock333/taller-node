@@ -1,22 +1,21 @@
 // Update with your config settings.
+
 module.exports = {
 
-  test: {
-    client: 'mysql',
+  development: {
+    client: 'sqlite3',
     connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'taller_node_test_db',
-      charset: 'utf8'
-    },
-    debug: false
+      filename: './dev.sqlite3'
+    }
   },
 
-  development: {
+  staging: {
     client: 'postgresql',
-    debug: false,
-    connection: process.env.DATABASE_URL || 'postgres://127.0.0.1:5432/taller_node_db',
+    connection: {
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
     pool: {
       min: 2,
       max: 10
@@ -24,11 +23,15 @@ module.exports = {
     migrations: {
       tableName: 'knex_migrations'
     }
-  }, 
+  },
 
   production: {
     client: 'postgresql',
-    connection: process.env.DATABASE_URL,
+    connection: {
+      database: 'my_db',
+      user:     'username',
+      password: 'password'
+    },
     pool: {
       min: 2,
       max: 10

@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var bookshelf = require('../bookshelf');
-var knex = bookshelf.knex;
 const Video = require('../models/videos');
 
 router.post('/create', function(req, res, next) {
