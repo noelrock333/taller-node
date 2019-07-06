@@ -1,16 +1,5 @@
 // Update with your config settings.
 module.exports = {
-  development: {
-    client: 'mysql',
-    connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: '',
-      database: 'taller_node_db',
-      charset: 'utf8'
-    },
-    debug: false
-  },
 
   test: {
     client: 'mysql',
@@ -24,7 +13,6 @@ module.exports = {
     debug: false
   },
 
-  /***
   development: {
     client: 'postgresql',
     debug: false,
@@ -37,7 +25,6 @@ module.exports = {
       tableName: 'knex_migrations'
     }
   }, 
-  ***/
 
   production: {
     client: 'postgresql',
